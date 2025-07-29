@@ -45,7 +45,45 @@ A Streamlit application for visualizing and comparing release timelines across m
    - Select scopes:
      - `repo` (for private repositories)
      - `public_repo` (for public repositories only)
+     - `read:org` (optional, for organization membership)
    - Copy the token and add it to your `.env` file
+
+### 🏢 Accessing Private Organization Repositories
+
+To access private repositories belonging to organizations (e.g., `comet-ml`), you need additional setup:
+
+#### **Required Permissions**
+1. **Organization Membership**: You must be a member of the target organization
+2. **Repository Access**: Organization admins must grant you access to specific private repositories
+3. **Token Scopes**: Your PAT must include the `repo` scope for full private repository access
+
+#### **SAML SSO Authorization** (if applicable)
+If the organization uses SAML Single Sign-On:
+
+1. After creating your token, go to [Personal Access Tokens](https://github.com/settings/tokens)
+2. Find your token and click "Configure SSO"
+3. Click "Authorize" next to the organization name
+4. Complete the SSO flow if prompted
+
+#### **Testing Organization Access**
+You can verify access to organization repositories:
+
+```bash
+# Test access to a specific organization repository
+curl -H "Authorization: token YOUR_TOKEN" \
+     https://api.github.com/repos/ORGANIZATION/REPOSITORY
+```
+
+#### **Common Issues**
+- **403 Forbidden**: Token needs SSO authorization or lacks proper scopes
+- **404 Not Found**: Repository doesn't exist or you don't have access
+- **SAML enforcement**: Organization requires SSO authorization for your token
+
+#### **Troubleshooting Steps**
+1. Verify you're a member of the organization
+2. Check that your token has the `repo` scope
+3. Authorize your token for SSO if the organization requires it
+4. Contact organization admins to verify repository access permissions
 
 ## 🚀 Usage
 
