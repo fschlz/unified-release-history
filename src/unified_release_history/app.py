@@ -170,6 +170,9 @@ class ReleaseTimeline:
 
             for release in releases:
                 try:
+                    # Skip releases without published_at (drafts, etc.)
+                    if not release.get('published_at'):
+                        continue
                     published_at = datetime.fromisoformat(
                         release['published_at'].replace('Z', '+00:00')
                     )
@@ -460,6 +463,9 @@ def render_main_content(timeline, start_date, end_date):
                 for data in st.session_state.repositories.values():
                     for release in data['releases']:
                         try:
+                            # Skip releases without published_at (drafts, etc.)
+                            if not release.get('published_at'):
+                                continue
                             published_at = datetime.fromisoformat(
                                 release['published_at'].replace('Z', '+00:00')
                             ).date()
@@ -641,6 +647,9 @@ def main():
                 for data in st.session_state.repositories.values():
                     for release in data['releases']:
                         try:
+                            # Skip releases without published_at (drafts, etc.)
+                            if not release.get('published_at'):
+                                continue
                             published_at = datetime.fromisoformat(
                                 release['published_at'].replace('Z', '+00:00')
                             ).date()
