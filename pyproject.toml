@@ -1,0 +1,70 @@
+[project]
+name = "unified-release-history"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Francisco",email = "22344801+fschlz@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "streamlit (>=1.47.1,<2.0.0)",
+    "watchdog (>=6.0.0,<7.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "requests (>=2.31.0,<3.0.0)",
+    "plotly (>=5.17.0,<6.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "unified_release_history", from = "src"}]
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+ruff = "^0.12.5"
+commitizen = "^4.8.3"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+# Same as Black.
+line-length = 140
+
+# Assume Python 3.12.
+target-version = "py312"
+
+# Specify the source directory for import sorting and other path-dependent checks.
+src = ["src"]
+
+[tool.ruff.lint]
+# Enable Pyflakes (F) and pycodestyle (E, W) and McCabe (C90) complexity.
+select = ["F", "E", "W", "C90"]
+ignore = []
+
+# Allow unused variables when underscore-prefixed.
+# dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_provider = "poetry"
+version_files = [
+    "pyproject.toml:version",
+    "src/unified_release_history/__init__.py:__version__" # Assuming you might have version here
+]
+# You can add more commitizen settings if needed, like update_changelog_on_bump
